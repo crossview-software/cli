@@ -4,7 +4,7 @@
 	"description": "A zero-dependency CLI generator for Node",
 	"main": "lib/index.js",
 	"scripts": {
-		"test": "mocha"
+		"test": "npx mocha"
 	},
 	"repository": {
 		"type": "git",
