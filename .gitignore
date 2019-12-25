@@ -1,0 +1,10 @@
+# IDE configurations
+**/.idea
+**/.vs
+**/.vscode
+
+# OS files
+**/.DS_Store
+
+# Node
+**/node_modules
