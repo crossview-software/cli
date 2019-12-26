@@ -80,7 +80,7 @@ class Cli {
 	 * @returns {Command}
 	 */
 	findCommand(cmd: string) {
-		return undefined
+		return this.commands.find(c => c.name === cmd)
 	}
 }
 
