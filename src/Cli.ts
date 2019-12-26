@@ -21,6 +21,7 @@ class Cli {
 		 */
 		this.commands = []
 		this.hasDefault = hasDefault || false
+		this.options = []
 	}
 
 	/**
