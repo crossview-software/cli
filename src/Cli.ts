@@ -61,7 +61,7 @@ class Cli {
 	}
 
 	/**
-	 * Registers a Command
+	 * Registers a Command on the CLI
 	 *
 	 * Commands are registered in an array. The first command in the array is treated as the default if the hasDefault option is true. When registering a command, setting the isDefault argument to true will register this Command in the front of the array instead of the end. For this reason, registering several Commands as default will result in the last Command registered being used as default.
 	 */
@@ -72,6 +72,13 @@ class Cli {
 		} else {
 			this.commands.push(command)
 		}
+	}
+
+	/**
+	 * Registers a Flag on the CLI
+	 */
+	registerFlag(flag: Flag) {
+		this.flags.push(flag)
 	}
 
 	/**
