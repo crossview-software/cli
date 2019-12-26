@@ -11,9 +11,12 @@ class Flag {
 		description: string,
 		handler: Function
 	) {
+		if (!flag) {
+			throw new TypeError("Argument 'flag' must be a valid string")
+		}
 		this.flag = flag
-		this.shortFlag = shortFlag
-		this.description = description
+		this.shortFlag = shortFlag || flag[0]
+		this.description = description || ""
 		this.handler = handler
 		this.args = []
 	}
