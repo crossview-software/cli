@@ -4,7 +4,6 @@ class Flag {
 	shortFlag: string
 	handler: Function
 	args: string[]
-	argsTaken: number
 
 	constructor(
 		flag: string,
