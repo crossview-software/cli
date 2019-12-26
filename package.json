@@ -4,8 +4,8 @@
 	"description": "A zero-dependency CLI generator for Node",
 	"main": "lib/index.js",
 	"scripts": {
-		"pretest": "tsc -p test/tsconfig.json",
-		"test": "mocha",
+		"pretest": "tsc -p test-src/tsconfig.json",
+		"test": "mocha --recursive",
 		"prebuild": "npm run test",
 		"build": "tsc -p src/tsconfig.json",
 		"prepublishOnly": "rm -r lib && npm run build"
