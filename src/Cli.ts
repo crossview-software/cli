@@ -47,16 +47,6 @@ class Cli {
 				action.args.push(args[++i])
 			}
 
-			// if (action.argsTaken > -1) {
-			// 	for (let j: number = 0; j < action.argsTaken; j++) {
-			// 		action.args.push(args[++i])
-			// 	}
-			// } else {
-			// 	while (args[i + 1][0] !== "-") {
-			// 		action.args.push(args[++i])
-			// 	}
-			// }
-
 			this.options.push(action)
 		}
 
@@ -70,6 +60,8 @@ class Cli {
 					}
 				})
 			}
+		} else if (this.options.findIndex(f => f.flag === "help") > -1) {
+			this.help()
 		}
 		return this
 	}
@@ -110,6 +102,8 @@ class Cli {
 	findCommand(cmd: string): Cli {
 		return this.commands[cmd]
 	}
+
+	help(): void {}
 }
 
 export default Cli
