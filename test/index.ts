@@ -1,8 +1,11 @@
 import { describe, it } from "mocha"
 import { assert } from "chai"
+import { Cli, Command, Flag } from "../lib/index"
 
-describe("New initial test", function() {
-	it("should pass", function() {
-		assert.equal(1, 1, "That's really weird...")
+describe("@crossview/cli module", function() {
+	it("should expose the correct objects", function() {
+		assert.exists(Cli, "Cli object is exported")
+		assert.exists(Command, "Command object is exported")
+		assert.exists(Flag, "Flag object is exported")
 	})
 })
