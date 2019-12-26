@@ -11,14 +11,7 @@ class Cli {
 	 * @param {boolean} hasDefault whether the generated CLI should have a default command
 	 */
 	constructor(hasDefault: boolean) {
-		/**
-		 * @type {Flag[]}
-		 */
 		this.flags = []
-
-		/**
-		 * @type {Command[]}
-		 */
 		this.commands = []
 		this.hasDefault = hasDefault || false
 		this.options = []
