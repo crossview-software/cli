@@ -1,27 +1,28 @@
 class Flag {
-	name: string
 	description: string
 	flag: string
 	shortFlag: string
 	handler: Function
 	args: string[]
-	argsTaken: number
 
 	constructor(
-		name: string,
-		description: string,
 		flag: string,
 		shortFlag: string,
-		handler: Function,
-		argsTaken: number = 0
+		description: string,
+		handler: Function
 	) {
-		this.name = name
-		this.description = description
+		if (!flag) {
+			throw new TypeError("Argument 'flag' must be a valid string")
+		}
 		this.flag = flag
-		this.shortFlag = shortFlag
+		this.shortFlag = shortFlag || flag[0]
+		this.description = description || ""
 		this.handler = handler
-		this.argsTaken = argsTaken
 		this.args = []
+	}
+
+	addArg(arg: string): void {
+		this.args.push(arg)
 	}
 }
 
