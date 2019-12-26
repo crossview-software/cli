@@ -10,7 +10,7 @@ class Cli {
 	/**
 	 * @param {boolean} hasDefault whether the generated CLI should have a default command
 	 */
-	constructor(hasDefault) {
+	constructor(hasDefault: boolean) {
 		/**
 		 * @type {Flag[]}
 		 */
