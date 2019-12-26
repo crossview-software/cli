@@ -1,5 +1,4 @@
 class Flag {
-	name: string
 	description: string
 	flag: string
 	shortFlag: string
@@ -8,20 +7,20 @@ class Flag {
 	argsTaken: number
 
 	constructor(
-		name: string,
-		description: string,
 		flag: string,
 		shortFlag: string,
-		handler: Function,
-		argsTaken: number = 0
+		description: string,
+		handler: Function
 	) {
-		this.name = name
-		this.description = description
 		this.flag = flag
 		this.shortFlag = shortFlag
+		this.description = description
 		this.handler = handler
-		this.argsTaken = argsTaken
 		this.args = []
+	}
+
+	addArg(arg: string): void {
+		this.args.push(arg)
 	}
 }
 
