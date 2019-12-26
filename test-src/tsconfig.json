@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"module": "CommonJs",
+		"target": "ES6",
+		"sourceMap": true,
+		"outDir": "../test"
+	},
+	"exclude": ["node_modules"]
+}

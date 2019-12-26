@@ -8,3 +8,9 @@
 
 # Node
 **/node_modules
+
+# Build
+**/lib
+**/test
+*.js
+*.js.map
