@@ -4,25 +4,35 @@ import { findFlag } from "./utils"
 
 class Cli {
 	flags: Flag[]
-	commands: Command[]
-	hasDefault: boolean
+	commands: Record<string, Cli>
 	options: Flag[]
+	handler: Function
+	hasDefault: boolean
+	shouldExecuteHandlers: boolean
+
 	/**
-	 * @param {boolean} hasDefault whether the generated CLI should have a default command
+	 * @param {boolean} hasDefault - whether the generated CLI should have a default command
+	 * @param {boolean} shouldExecuteHandlers - whether the CLI should execute registered handlers during processing
 	 */
-	constructor(hasDefault: boolean) {
+	constructor(
+		hasDefault: boolean = false,
+		shouldExecuteHandlers: boolean = true
+	) {
 		this.flags = []
-		this.commands = []
-		this.hasDefault = hasDefault || false
+		this.commands = {}
 		this.options = []
+		this.hasDefault = hasDefault
+		this.shouldExecuteHandlers = shouldExecuteHandlers
 	}
 
 	/**
 	 * Processes the CLI arguments
-	 *
-	 * @param {string[]} args - the CLI arguments
 	 */
 	processArgs(args: string[]) {
+		if (!args) {
+			args = process.argv.slice(2)
+		}
+
 		let command: Command = this.findCommand(args[0])
 		const index: number = command ? 1 : 0
 
