@@ -94,6 +94,11 @@ class Cli {
 		return this
 	}
 
+	registerHandler(handler: Function) {
+		this.handler = handler
+		return this
+	}
+
 	/**
 	 * Determines whether a string represents a valid command and returns the command if it does
 	 *
