@@ -11,6 +11,7 @@
 
 # Build
 **/lib
-**/test
 *.js
 *.js.map
+
+!test/**/*.js
