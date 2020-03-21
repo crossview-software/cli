@@ -1,5 +1,4 @@
 import Flag from "./Flag"
-import { findFlag } from "./utils"
 
 class Cli {
 	name: string
@@ -38,7 +37,7 @@ class Cli {
 		}
 
 		for (let i: number = 0; i < args.length; i++) {
-			const action: Flag = findFlag(args[i], this.flags)
+			const action: Flag = this.findFlag(args[i])
 			if (!action) {
 				throw new Error(`Invalid flag: ${args[i]}`)
 			}
@@ -106,6 +105,36 @@ class Cli {
 	 */
 	findCommand(cmd: string): Cli {
 		return this.commands[cmd]
+	}
+
+	/**
+	 * Tests whether a command line argument is a flag on this command
+	 */
+	findFlag(arg: string): Flag {
+		if (arg.substring(0, 2) !== "--") {
+			return this.findShortFlag(arg)
+		}
+
+		if (arg.length < 3) {
+			return null
+		}
+
+		return this.flags.find(flag => flag.flag === arg.substring(2))
+	}
+
+	/**
+	 * Tests whether a command line argument is a shorthand flag on this command
+	 */
+	findShortFlag(arg: string): Flag {
+		if (arg.substring(0, 1) !== "-") {
+			return undefined
+		}
+
+		if (arg.length !== 2) {
+			return undefined
+		}
+
+		return this.flags.find(flag => flag.shortFlag === arg[1])
 	}
 
 	help(): void {}
