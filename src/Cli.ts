@@ -97,7 +97,7 @@ class Cli {
 	/**
 	 * Determines whether a string represents a valid command and returns the command if it does
 	 *
-	 * @returns {Command}
+	 * @returns {Cli}
 	 */
 	findCommand(cmd: string): Cli {
 		return this.commands[cmd]
