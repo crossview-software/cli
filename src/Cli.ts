@@ -43,7 +43,7 @@ class Cli {
 			}
 
 			while (args[i + 1] && args[i + 1][0] !== "-") {
-				action.args.push(args[++i])
+				action.addArg(args[++i])
 			}
 
 			this.options.push(action)
