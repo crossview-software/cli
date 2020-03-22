@@ -1,13 +1,14 @@
 {
 	"name": "@crossview/cli",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "A zero-dependency CLI generator for Node",
 	"main": "lib/index.js",
 	"scripts": {
 		"test": "nyc --reporter=text-lcov mocha | coveralls",
 		"test-nocoveralls": "nyc --reporter=text mocha",
 		"build": "tsc -p src/tsconfig.json",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "npm run build",
+		"prettier": "npx prettier --write"
 	},
 	"repository": {
 		"type": "git",
