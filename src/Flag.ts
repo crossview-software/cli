@@ -4,6 +4,7 @@ class Flag {
 	shortFlag: string
 	handler: Function
 	args: string[]
+	output: any
 
 	constructor(
 		flag: string,
@@ -23,6 +24,11 @@ class Flag {
 
 	addArg(arg: string): void {
 		this.args.push(arg)
+	}
+
+	callHandler() : any {
+		if (this.handler)
+			return this.output = this.handler()
 	}
 }
 
