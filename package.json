@@ -5,6 +5,7 @@
 	"main": "lib/index.js",
 	"scripts": {
 		"test": "nyc --reporter=text-lcov mocha | coveralls",
+		"test-nocoveralls": "nyc --reporter=text mocha",
 		"build": "tsc -p src/tsconfig.json",
 		"prepublishOnly": "npm run build"
 	},
