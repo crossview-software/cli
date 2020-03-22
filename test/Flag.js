@@ -11,7 +11,7 @@ describe("@crossview/cli Flag class", function() {
         expect(flag.flag).to.have.string("hello")
         expect(flag.shortFlag).to.have.string("h")
         expect(flag.description).to.have.string("Just a test")
-        expect(flag.handler()).to.equal(42)
+        expect(flag.callHandler()).to.equal(42)
         expect(flag.args).to.be.an("array").that.has.lengthOf(0)
 
     })
@@ -55,6 +55,14 @@ describe("@crossview/cli Flag class", function() {
             .to.include("the")
             .to.include("best")
             .to.include("boss")
+
+    })
+
+    it("should only call the supplied handler if it exists", function() {
+
+        const flag = new Flag("hello", "h", "Something here", null)
+
+        expect(flag.callHandler()).to.not.exist
 
     })
 
