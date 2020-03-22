@@ -1,7 +1,9 @@
 import Flag from "./Flag"
+import {EOL} from "os"
 
 class Cli {
 	name: string
+	description: string
 	flags: Flag[]
 	commands: Record<string, Cli>
 	options: Flag[]
@@ -11,15 +13,19 @@ class Cli {
 
 	/**
 	 * @param {string} name - the name of the CLI object
+	 * @param {string} description - the description of the CLI program
 	 * @param {boolean} shouldReturnHandler - whether the CLI should return the return value of the handler or only call the hanlder
 	 * @param {boolean} shouldExecuteHandlers - whether the CLI should execute registered handlers during processing
 	 */
-	constructor(name: string, shouldReturnHandler = false, shouldExecuteHandlers: boolean = true) {
+	constructor(name: string, description: string, shouldReturnHandler = false, shouldExecuteHandlers: boolean = true) {
 		if (!name) {
 			throw new TypeError("Argument 'name' must be a valid string")
 		}
 		this.name = name
-		this.flags = []
+		this.description = description
+		this.flags = [
+			new Flag("help", "h", "Prints helpful information about this command", null)
+		]
 		this.commands = {}
 		this.options = []
 		this.shouldReturnHandler = shouldReturnHandler
@@ -29,7 +35,7 @@ class Cli {
 	/**
 	 * Processes the CLI arguments
 	 */
-	processArgs(args: string[] = null, shouldReturnHandler = false): Cli {
+	processArgs(args: string[] = null, shouldReturnHandler = false): Cli|any {
 		if (!args) {
 			args = process.argv.slice(2)
 		}
@@ -63,13 +69,13 @@ class Cli {
 				this.handler(this.options)
 			} else {
 				this.options.forEach(actionSet => {
-					if (actionSet.handler) {
-						actionSet.handler()
-					}
+					actionSet.callHandler()
 				})
 			}
-		} else if (this.options.findIndex(f => f.flag === "help") > -1) {
-			this.help()
+		} else if (this.options.find(f => f.flag === "help")) {
+			if (this.shouldReturnHandler)
+				return this.help()
+			console.log(this.help())
 		}
 		return this
 	}
@@ -146,7 +152,39 @@ class Cli {
 		return this.flags.find(flag => flag.shortFlag === arg[1])
 	}
 
-	help(): void {}
+	help(): string {
+		let output: string[] = []
+		let longestOutputLength: number = 0
+
+		output.push(this.name)
+		output.push(this.description)
+		output.push("")
+		output.push("Options")
+
+		this.flags.forEach(f => {
+			const length = `-${f.shortFlag} --${f.flag}`.length + 5
+			if (length > longestOutputLength)
+				longestOutputLength = length
+		})
+
+		this.flags.forEach(f => {
+			let line = `-${f.shortFlag} --${f.flag}`
+			while (line.length < longestOutputLength)
+				line += " "
+			line += f.description
+			output.push(line)
+		})
+
+		if (Object.keys(this.commands).length > 0) {
+			Object.keys(this.commands).forEach(command => {
+				output.push("")
+				output.push(`Subcommand on ${this.name}`)
+				output.push(this.commands[command].help())
+			})
+		}
+
+		return output.reduce((acc, val) => acc + EOL + val) + EOL
+	}
 }
 
 export default Cli
