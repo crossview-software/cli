@@ -1,8 +1,11 @@
 .idea/
 test/
 src/
+.circleci/
+.nyc_output/
 
 .gitignore
 .gitattributes
 .prettierrc
+.coveralls.yml
 *.js.map

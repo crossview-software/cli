@@ -17,3 +17,5 @@
 # Test
 !test/**/*.js
 **/.nyc_output
+**/coverage
+.coveralls.yml
