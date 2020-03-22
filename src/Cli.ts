@@ -6,13 +6,15 @@ class Cli {
 	commands: Record<string, Cli>
 	options: Flag[]
 	handler: Function
+	shouldReturnHandler: boolean
 	shouldExecuteHandlers: boolean
 
 	/**
 	 * @param {string} name - the name of the CLI object
+	 * @param {boolean} shouldReturnHandler - whether the CLI should return the return value of the handler or only call the hanlder
 	 * @param {boolean} shouldExecuteHandlers - whether the CLI should execute registered handlers during processing
 	 */
-	constructor(name: string, shouldExecuteHandlers: boolean = true) {
+	constructor(name: string, shouldReturnHandler = false, shouldExecuteHandlers: boolean = true) {
 		if (!name) {
 			throw new TypeError("Argument 'name' must be a valid string")
 		}
@@ -20,20 +22,25 @@ class Cli {
 		this.flags = []
 		this.commands = {}
 		this.options = []
+		this.shouldReturnHandler = shouldReturnHandler
 		this.shouldExecuteHandlers = shouldExecuteHandlers
 	}
 
 	/**
 	 * Processes the CLI arguments
 	 */
-	processArgs(args: string[]): Cli {
+	processArgs(args: string[] = null, shouldReturnHandler = false): Cli {
 		if (!args) {
 			args = process.argv.slice(2)
 		}
 
+		if (shouldReturnHandler) {
+			this.shouldReturnHandler = shouldReturnHandler
+		}
+
 		let command: Cli = this.findCommand(args[0])
 		if (command) {
-			return command.processArgs(args.slice(1))
+			return command.processArgs(args.slice(1), this.shouldReturnHandler)
 		}
 
 		for (let i: number = 0; i < args.length; i++) {
@@ -46,11 +53,13 @@ class Cli {
 				action.addArg(args[++i])
 			}
 
-			this.options.push(action)
+			this.options.unshift(action)
 		}
 
 		if (this.shouldExecuteHandlers) {
 			if (this.handler) {
+				if (this.shouldReturnHandler)
+					return this.handler(this.options)
 				this.handler(this.options)
 			} else {
 				this.options.forEach(actionSet => {
