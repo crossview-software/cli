@@ -26,9 +26,8 @@ class Flag {
 		this.args.push(arg)
 	}
 
-	callHandler() : any {
-		if (this.handler)
-			return this.output = this.handler()
+	callHandler(): any {
+		if (this.handler) return (this.output = this.handler())
 	}
 }
 
