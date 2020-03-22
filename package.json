@@ -4,7 +4,7 @@
 	"description": "A zero-dependency CLI generator for Node",
 	"main": "lib/index.js",
 	"scripts": {
-		"test": "nyc --reporter=text mocha",
+		"test": "nyc --reporter=text-lcov mocha",
 		"build": "tsc -p src/tsconfig.json",
 		"prepublishOnly": "npm run build"
 	},
